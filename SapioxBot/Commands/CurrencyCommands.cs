@@ -117,7 +117,7 @@ namespace SapioxBot.Commands
         }
 
         [SlashCommand("buy", "buy an item")]
-        public async Task Work(InteractionContext ctx, string item_name)
+        public async Task Buy(InteractionContext ctx, [Option("item_name", "Item name")] string item_name)
         {
             using (var Database = DatabaseManager.Database)
             {
@@ -136,7 +136,7 @@ namespace SapioxBot.Commands
                 {
                     var User = Users.FindOne(x => x.Id == ctx.User.Id);
 
-                    var item = Items.Itemlist.Find(x => x.Name == item_name);
+                    var item = Items.Itemlist.Find(x => x.Name.ToLower() == item_name.ToLower());
 
                     if (item == null) await ctx.CreateResponseAsync("Invalid item name!");
                     else
