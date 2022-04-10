@@ -6,9 +6,9 @@ using SapioxBot.Currency;
 using SapioxBot.Database;
 using System.Net;
 
-namespace SapioxBot
+namespace SapioxBot.Commands
 {
-    public class SlashCommands : ApplicationCommandModule
+    public class OtherCommands : ApplicationCommandModule
     {
         [SlashCommand("settings", "test")]
         public async Task Settings(InteractionContext ctx)
@@ -35,87 +35,7 @@ namespace SapioxBot
             await ctx.CreateResponseAsync(message);
         }
 
-        [SlashCommand("bal", "shows your coin balance")]
-        public async Task Bal(InteractionContext ctx)
-        {
-            using (var Database = DatabaseManager.Database)
-            {
-                var Users = Database.GetCollection<User>("users");
-                if (Users.FindOne(x => x.Id == ctx.User.Id.ToString()) == null)
-                {
-                    var user = new User
-                    {
-                        Id = ctx.User.Id.ToString()
-                    };
-
-                    Users.Insert(user);
-                }
-                else
-                {
-                    var embed = new DiscordEmbedBuilder()
-                    {
-                        Title = $"{ctx.User.Username}'s Balance",
-                        Description = Users.FindOne(x => x.Id == ctx.User.Id.ToString()).Coins + " $",
-                        Color = DiscordColor.Cyan
-                    };
-                    await ctx.CreateResponseAsync(embed);
-                }
-            }
-        }
-
-        [SlashCommand("inventory", "shows your invetory")]
-        public async Task Inventory(InteractionContext ctx)
-        {
-            using (var Database = DatabaseManager.Database)
-            {
-                var Users = Database.GetCollection<User>("users");
-
-                if (Users.FindOne(x => x.Id == ctx.User.Id.ToString()) == null)
-                {
-                    var user = new User
-                    {
-                        Id = ctx.User.Id.ToString()
-                    };
-
-                    Users.Insert(user);
-                }
-                else
-                {
-                    var User = Users.FindOne(x => x.Id == ctx.User.Id.ToString());
-                    //Console.WriteLine(User.Items.ElementAt(0).EmojiId + " debug 1");
-                    var embed = new DiscordEmbedBuilder()
-                    {
-                        Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = ctx.User.Username + "'s inventory", IconUrl = ctx.User.AvatarUrl },
-                        Description = "- " + DiscordEmoji.FromGuildEmote(ctx.Client, User.Items.ElementAt(0).EmojiId) + " " + User.Items.ElementAt(0).Name,
-                        Color = DiscordColor.Cyan
-                    };
-                    await ctx.CreateResponseAsync(embed);
-                }
-            }
-        }
-
-        [SlashCommand("give_item", "admin only command")]
-        public async Task GiveItem(InteractionContext ctx)
-        {
-            try
-            {
-                using (var Database = DatabaseManager.Database)
-                {
-                    var Users = Database.GetCollection<User>("users");
-                    var user = Users.FindOne(x => x.Id == ctx.User.Id.ToString());
-                    user.Items.Add(Items.testItem);
-                    Users.Update(user);
-
-                    await ctx.CreateResponseAsync("test");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
-
-            [SlashCommand("status", "sets bot activity")]
+        [SlashCommand("status", "sets bot activity")]
         public async Task Status(InteractionContext ctx, [Option("name", "activity name")] string name)
         {
             await ctx.Client.UpdateStatusAsync(new DiscordActivity() { Name = name, ActivityType = ActivityType.Streaming }, UserStatus.Online);

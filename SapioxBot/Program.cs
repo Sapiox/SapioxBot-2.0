@@ -1,6 +1,8 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using SapioxBot.Commands;
+using SapioxBot.Currency;
 
 namespace SapioxBot
 {
@@ -84,11 +86,14 @@ namespace SapioxBot
 
             discord.Ready += async (s, e) =>
             {
+                Items.Itemlist.Add(Items.testItem);
+                Items.Itemlist.Add(Items.papiez);
                 await discord.UpdateStatusAsync(new DiscordActivity() { Name = "SapioxBot 2.0 soon...", ActivityType = ActivityType.Streaming }, UserStatus.Online);
             };
 
             var slash = discord.UseSlashCommands();
-            slash.RegisterCommands<SlashCommands>(891716256414175312);
+            slash.RegisterCommands<OtherCommands>(891716256414175312);
+            slash.RegisterCommands<CurrencyCommands>(891716256414175312);
             await discord.ConnectAsync();
             await Task.Delay(-1);
         }

@@ -9,7 +9,7 @@ namespace SapioxBot.Database
 {
     public class User
     {
-        public string Id { get; set; }
+        public ulong Id { get; set; }
         public int Coins { get; set; } = 0;
         public List<Item> Items { get; set; } = new List<Item>();
     }

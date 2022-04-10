@@ -9,6 +9,9 @@ namespace SapioxBot.Currency
 {
     public class Items
     {
-        public static Item testItem = new Item() { cost = 2137, Name = "testItem" };
+        public static  List<Item> Itemlist = new List<Item>();
+
+        public static Item testItem = new Item() { cost = 999999999, Name = "testItem", EmojiId = 921271332589674517 };
+        public static Item papiez = new Item() { cost = 2137, Name = "John Paul II", EmojiId = 962735533791006770 };
     }
 }

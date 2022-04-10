@@ -11,6 +11,6 @@ namespace SapioxBot.Database
     {
         public int cost { get; set; }
         public string Name { get; set; }
-        public ulong EmojiId { get; set; } = 921271332589674517;
+        public ulong EmojiId { get; set; }
     }
 }
