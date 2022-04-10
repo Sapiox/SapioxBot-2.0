@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PackageIcon>52024046f148939f1cd2ac08877f6209.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\..\..\..\Downloads\52024046f148939f1cd2ac08877f6209.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DSharpPlus" Version="4.2.0-nightly-01105" />
+      <PackageReference Include="DSharpPlus.Interactivity" Version="4.2.0-nightly-01105" />
+      <PackageReference Include="DSharpPlus.SlashCommands" Version="4.2.0-nightly-01105" />
+      <PackageReference Include="LiteDB" Version="5.0.11" />
+    </ItemGroup>
+
+</Project>
