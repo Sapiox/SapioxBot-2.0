@@ -31,8 +31,8 @@ namespace SapioxBot.Commands
                 {
                     var embed = new DiscordEmbedBuilder()
                     {
-                        Title = $"{ctx.User.Username}'s Balance",
-                        Description = Users.FindOne(x => x.Id == ctx.User.Id).Coins + " $",
+                        Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = $"{ctx.User.Username}'s Balance", IconUrl = ctx.User.AvatarUrl },
+                        Description = $"**{Users.FindOne(x => x.Id == ctx.User.Id).Coins} $**",
                         Color = DiscordColor.Cyan
                     };
                     await ctx.CreateResponseAsync(embed);
@@ -109,7 +109,7 @@ namespace SapioxBot.Commands
 
             var embed = new DiscordEmbedBuilder()
             {
-                Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = "Shop", IconUrl = ctx.Client.CurrentUser.AvatarUrl },
+                Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = "Sapiox Shop", IconUrl = ctx.Client.CurrentUser.AvatarUrl },
                 Description = description,
                 Color = DiscordColor.Blurple
             };
@@ -132,38 +132,108 @@ namespace SapioxBot.Commands
 
                     Users.Insert(user);
                 }
+                var User = Users.FindOne(x => x.Id == ctx.User.Id);
+
+                var item = Items.Itemlist.Find(x => x.Name.ToLower() == item_name.ToLower());
+
+                if (item == null) await ctx.CreateResponseAsync("Invalid item name!");
                 else
                 {
-                    var User = Users.FindOne(x => x.Id == ctx.User.Id);
+                    if (User.Coins >= item.cost)
+                    {
+                        User.Items.Add(item);
+                        Users.Update(User);
 
-                    var item = Items.Itemlist.Find(x => x.Name.ToLower() == item_name.ToLower());
-
-                    if (item == null) await ctx.CreateResponseAsync("Invalid item name!");
+                        var embed = new DiscordEmbedBuilder()
+                        {
+                            Description = "Sucess, you now have a new item!",
+                            Color = DiscordColor.Green
+                        };
+                        await ctx.CreateResponseAsync(embed);
+                    }
                     else
                     {
-                        if(item.cost >= User.Coins)
+                        var embed = new DiscordEmbedBuilder()
                         {
-                            User.Items.Add(item);
-                            Users.Update(User);
-
-                            var embed = new DiscordEmbedBuilder()
-                            {
-                                Description = "Sucess, you now have a new item!",
-                                Color = DiscordColor.Green
-                            };
-                            await ctx.CreateResponseAsync(embed);
-                        }
-                        else
-                        {
-                            var embed = new DiscordEmbedBuilder()
-                            {
-                                Description = "Bruh you too poor, go to work!",
-                                Color = DiscordColor.Red
-                            };
-                            await ctx.CreateResponseAsync(embed);
-                        }
+                            Description = "Bruh you too poor, go to work!",
+                            Color = DiscordColor.Red
+                        };
+                        await ctx.CreateResponseAsync(embed);
                     }
                 }
+            }
+        }
+
+        [SlashCommand("work", "just work")]
+        public async Task Work(InteractionContext ctx)
+        {
+
+            await ctx.CreateResponseAsync("ok");
+        }
+
+        [SlashCommand("daily", "gives you daily coins!")]
+        public async Task Daily(InteractionContext ctx)
+        {
+            using (var Database = DatabaseManager.Database)
+            {
+                var Users = Database.GetCollection<User>("users");
+
+                if (Users.FindOne(x => x.Id == ctx.User.Id) == null)
+                {
+                    var user = new User
+                    {
+                        Id = ctx.User.Id
+                    };
+
+                    Users.Insert(user);
+                }
+
+                var User = Users.FindOne(x => x.Id == ctx.User.Id);
+
+                User.Coins += 10000;
+                Users.Update(User);
+
+                var embed = new DiscordEmbedBuilder()
+                {
+                    Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = $"{ctx.User.Username}'s Daily Coins", IconUrl = ctx.User.AvatarUrl },
+                    Description = "**10000 $** was placed in your wallet!",
+                    Color = DiscordColor.Aquamarine
+                };
+
+                await ctx.CreateResponseAsync(embed);
+            }
+        }
+
+        [SlashCommand("monthly", "gives you monthly coins!")]
+        async Task Monthly(InteractionContext ctx)
+        {
+            using (var Database = DatabaseManager.Database)
+            {
+                var Users = Database.GetCollection<User>("users");
+
+                if (Users.FindOne(x => x.Id == ctx.User.Id) == null)
+                {
+                    var user = new User
+                    {
+                        Id = ctx.User.Id
+                    };
+
+                    Users.Insert(user);
+                }
+
+                var User = Users.FindOne(x => x.Id == ctx.User.Id);
+
+                User.Coins += 100000;
+                Users.Update(User);
+
+                var embed = new DiscordEmbedBuilder()
+                {
+                    Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = $"{ctx.User.Username}'s Monthly Coins", IconUrl = ctx.User.AvatarUrl },
+                    Description = "**100000 $** was placed in your wallet!",
+                    Color = DiscordColor.Aquamarine
+                };
+
+                await ctx.CreateResponseAsync(embed);
             }
         }
     }

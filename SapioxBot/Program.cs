@@ -17,7 +17,7 @@ namespace SapioxBot
         {
             var discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = "Njg2Mjc3MDMwNDgzODUzNDA2.XmU3Sg.6Mk9sNC-lE8JRlstA4Bt-adik50",
+                Token = "Njg2Mjc3MDMwNDgzODUzNDA2.XmU3Sg.j7_BOyGOhY15Yjd7_c9FKVuzhvY",
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             });
@@ -68,11 +68,23 @@ namespace SapioxBot
 
                     if (e.Values.Contains("scpsl"))
                     {
+                        string slservers = "";
+                        using(var Database = DatabaseManager.Database)
+                        {
+                            var User = Database.GetCollection<Database.User>("users").FindOne(x => x.Id == e.User.Id);
+
+                            foreach(Database.scpsl scpslserver in User.SCPSL_Servers)
+                            {
+                                slservers += $"- IP:{scpslserver.ip} Port: {scpslserver.Port}\n";
+                            }
+                        }
+
                         embed.WithFooter(" ", "https://static.wikia.nocookie.net/scp-secret-laboratory-official/images/a/af/SCP_SL_Logo.png");
+                        string serversString = String.IsNullOrWhiteSpace(slservers) ? "- ``none``\n" : slservers;
                         embed.Description =
                             "**SCP:SL Integration**\n\n"+
                             "***✅ Available servers:***\n" +
-                            "- ``none``\n"
+                            serversString
                             ;
 
                         var button = new DiscordButtonComponent(ButtonStyle.Success, "add_server_sl", "Add Server", emoji: new DiscordComponentEmoji(935253091417202688));
@@ -88,6 +100,7 @@ namespace SapioxBot
             {
                 Items.Itemlist.Add(Items.testItem);
                 Items.Itemlist.Add(Items.papiez);
+                Items.Itemlist.Add(Items.cum);
                 await discord.UpdateStatusAsync(new DiscordActivity() { Name = "SapioxBot 2.0 soon...", ActivityType = ActivityType.Streaming }, UserStatus.Online);
             };
 

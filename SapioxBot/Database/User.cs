@@ -12,5 +12,6 @@ namespace SapioxBot.Database
         public ulong Id { get; set; }
         public int Coins { get; set; } = 0;
         public List<Item> Items { get; set; } = new List<Item>();
+        public List<scpsl> SCPSL_Servers { get; set; } = new List<scpsl>();
     }
 }
