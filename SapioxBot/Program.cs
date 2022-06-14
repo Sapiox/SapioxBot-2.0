@@ -19,7 +19,7 @@ namespace SapioxBot
         {
             var discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = "Njg2MjA1NTg1NjM2NDU4NDk5.GM4SFo.Mm67DaDU2bLTwbNnHlR9colL_bogYJJVmtwPFY",
+                Token = "Njg2Mjc3MDMwNDgzODUzNDA2.GXwx3s.ebepx8CV6Suk40Pg99AKX0vTtWyU2OeL_-FMeY",
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             });
@@ -39,41 +39,6 @@ namespace SapioxBot
 
             discord.ComponentInteractionCreated += async (s, e) => 
             {
-                //cwanstars recrutaiment
-                //q in customId means question
-                if (e.Id == "cw_rekru_apply_dc")
-                {
-                    var response = new DiscordInteractionResponseBuilder();
-
-                    response
-                      .WithTitle("Rekrutacja CwanStars")
-                      .WithCustomId("cw_rekru_answer_dc")
-                      .AddComponents(new TextInputComponent(label: "Ile masz lat?", customId: "cw_rekru_q1_dc", placeholder: "Wpisz swój wiek", max_length: 3))
-                      .AddComponents(new TextInputComponent("Czy pełniłeś/aś kiedyś podobną funkcję?","cw_rekru_q2"))
-                      .AddComponents(new TextInputComponent("Jeżeli tak to gdzie i jaką?", "cw_rekru_q3", required: false))
-                      .AddComponents(new TextInputComponent("Opisz siebie!", "cw_rekru_q4", style: TextInputStyle.Paragraph));
-
-
-                    await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, response);
-                }
-
-                if (e.Id == "cw_rekru_apply_sl")
-                {
-                    var response = new DiscordInteractionResponseBuilder();
-
-                    response
-                      .WithTitle("Rekrutacja CwanStars")
-                      .WithCustomId("cw_rekru_answer_sl")
-                      .AddComponents(new TextInputComponent(label: "Ile masz lat?", customId: "cw_rekru_q1_sl", placeholder: "Wpisz swój wiek", max_length: 3))
-                      .AddComponents(new TextInputComponent("Czy pełniłeś/aś kiedyś podobną funkcję?", "cw_rekru_q2", max_length: 3))
-                      .AddComponents(new TextInputComponent("Ile godzin masz w scpsl?", "cw_rekru_q3"))
-                      .AddComponents(new TextInputComponent("Co zmieniłbyś na serwerze?", "cw_rekru_q4"))
-                      .AddComponents(new TextInputComponent("Opisz siebie!", "cw_rekru_q5", style: TextInputStyle.Paragraph));
-
-                    await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, response);
-                }
-
-
                 //settings choose code
                 if (e.Id == "settings_menu")
                 {
@@ -91,34 +56,6 @@ namespace SapioxBot
                     };
 
                     var dropdown = new DiscordSelectComponent("settings_menu", null, options);
-
-                    if (e.Values.Contains("scpsl"))
-                    {
-                        string slservers = "";
-                        using(var Database = DatabaseManager.Database)
-                        {
-                            var User = Database.GetCollection<Database.User>("users").FindOne(x => x.Id == e.User.Id);
-
-                            foreach(Database.scpsl scpslserver in User.SCPSL_Servers)
-                            {
-                                slservers += $"- IP:{scpslserver.ip} Port: {scpslserver.Port}\n";
-                            }
-                        }
-
-                        embed.WithFooter(" ", "https://static.wikia.nocookie.net/scp-secret-laboratory-official/images/a/af/SCP_SL_Logo.png");
-                        string serversString = String.IsNullOrWhiteSpace(slservers) ? "- ``none``\n" : slservers;
-                        embed.Description =
-                            "**SCP:SL Integration**\n\n"+
-                            "***✅ Available servers:***\n" +
-                            serversString
-                            ;
-
-                        var button = new DiscordButtonComponent(ButtonStyle.Success, "add_server_sl", "Add Server", emoji: new DiscordComponentEmoji(935253091417202688));
-
-                        var message = new DiscordInteractionResponseBuilder().AddEmbed(embed).AddComponents(button);
-
-                        await e.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, message);
-                    }
                 }
             };
 
@@ -130,8 +67,10 @@ namespace SapioxBot
             };
 
             var slash = discord.UseSlashCommands();
-            slash.RegisterCommands<OtherCommands>(464854486226305036);
-            slash.RegisterCommands<CurrencyCommands>(464854486226305036);
+            slash.RegisterCommands<OtherCommands>();
+            slash.RegisterCommands<PSBIG>(464854486226305036);
+            slash.RegisterCommands<CwanStars>(464854486226305036);
+            slash.RegisterCommands<CurrencyCommands>();
             await discord.ConnectAsync();
             await Task.Delay(-1);
         }

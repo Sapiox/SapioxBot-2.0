@@ -77,7 +77,7 @@ namespace SapioxBot.Commands
             }
         }
 
-        [SlashCommand("give_item", "admin only command")]
+        /*[SlashCommand("give_item", "admin only command")]
         public async Task GiveItem(InteractionContext ctx)
         {
             try
@@ -96,7 +96,7 @@ namespace SapioxBot.Commands
             {
                 Console.WriteLine(e);
             }
-        }
+        }*/
 
         [SlashCommand("shop", "items shop")]
         public async Task Shop(InteractionContext ctx)
@@ -164,12 +164,12 @@ namespace SapioxBot.Commands
             }
         }
 
-        [SlashCommand("work", "just work")]
+        /*[SlashCommand("work", "just work")]
         public async Task Work(InteractionContext ctx)
         {
 
             await ctx.CreateResponseAsync("ok");
-        }
+        }*/
 
         [SlashCommand("daily", "gives you daily coins!")]
         public async Task Daily(InteractionContext ctx)
