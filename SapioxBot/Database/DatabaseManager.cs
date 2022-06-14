@@ -10,7 +10,7 @@ namespace SapioxBot
 {
     public class DatabaseManager
     {
-        public static LiteDatabase Database => new LiteDatabase(@"C:\Users\CCWAN\Documents\database.db");
+        public static LiteDatabase Database => new LiteDatabase(@"database.db");
 
         public static ILiteCollection<User> Users => Database.GetCollection<User>("users");
     }

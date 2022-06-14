@@ -80,14 +80,14 @@ namespace SapioxBot
                     var embed = new DiscordEmbedBuilder()
                     {
                         Title = "🦊 SapioxBot Settings",
+                        Description = $"Language: ``{Translate.CurrentLanguage}``",
                         Color = DiscordColor.Orange
                     };
 
                     var options = new List<DiscordSelectComponentOption>()
                     {
-                        new DiscordSelectComponentOption("SCPSL server inegration", "scpsl"),
                         new DiscordSelectComponentOption("Curency", "currency"),
-                        new DiscordSelectComponentOption("Other", "other")
+                        new DiscordSelectComponentOption("Other", "other", isDefault: true)
                     };
 
                     var dropdown = new DiscordSelectComponent("settings_menu", null, options);
@@ -122,57 +122,11 @@ namespace SapioxBot
                 }
             };
 
-            discord.ModalSubmitted += async (s, e) =>
-            {
-                if(e.Values.TryGetValue("cw_rekru_q1_sl", out string age))
-                {
-                    e.Values.TryGetValue("cw_rekru_q2", out string q2);
-                    e.Values.TryGetValue("cw_rekru_q3", out string q3);
-                    e.Values.TryGetValue("cw_rekru_q4", out string q4);
-                    e.Values.TryGetValue("cw_rekru_q5", out string q5);
-
-                    var embed = new DiscordEmbedBuilder()
-                    {
-                        Title = "Podanie na Moderatora",
-                        Description =
-                        $"Podanie napisane przez: {e.Interaction.User.Mention}"+
-                        "\n\n**Typ: SL**\n\n" +
-                        $"Ile masz lat?: {age}\n" +
-                        $"Czy pełniłeś/aś kiedyś podobną funkcję?: {q2}\n" +
-                        $"Ile godzin masz w scpsl?: {q3}\n" +
-                        $"Co zmieniłbyś na serwerze?: {q4}\n" +
-                        $"Opisz siebie!: {q5}"
-                    };
-                    await e.Interaction.Guild.GetChannel(975844919623163934).SendMessageAsync(embed);
-                }
-                if (e.Values.TryGetValue("cw_rekru_q1_dc", out string agee))
-                {
-                    e.Values.TryGetValue("cw_rekru_q2", out string q2);
-                    e.Values.TryGetValue("cw_rekru_q3", out string q3);
-                    e.Values.TryGetValue("cw_rekru_q4", out string q4);
-
-                    var embed = new DiscordEmbedBuilder()
-                    {
-                        Title = "Podanie na Moderatora",
-                        Description =
-                        $"Podanie napisane przez: {e.Interaction.User.Mention}" +
-                        "\n\n**Typ: Discord**\n\n" +
-                        $"Ile masz lat?: {agee}\n" +
-                        $"Czy pełniłeś/aś kiedyś podobną funkcję?: {q2}\n" +
-                        $"Jeżeli tak to gdzie i jaką?: {q3}\n" +
-                        $"Opisz siebie!: {q4}"
-                    };
-                    await e.Interaction.Guild.GetChannel(975844919623163934).SendMessageAsync(embed);
-                }
-
-                await e.Interaction.CreateResponseAsync(InteractionResponseType.AutoCompleteResult);
-            };
-
             discord.Ready += async (s, e) =>
             {
                 Items.Itemlist.Add(Items.testItem);
                 Items.Itemlist.Add(Items.amogus);
-                await discord.UpdateStatusAsync(new DiscordActivity() { Name = "tak", ActivityType = ActivityType.Streaming }, UserStatus.Online);
+                await discord.UpdateStatusAsync(new DiscordActivity() { Name = "👍", ActivityType = ActivityType.Streaming }, UserStatus.Online);
             };
 
             var slash = discord.UseSlashCommands();
