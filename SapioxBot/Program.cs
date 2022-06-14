@@ -26,7 +26,8 @@ namespace SapioxBot
 
             discord.GuildMemberAdded += async (s, e) =>
             {
-                await e.Guild.GetChannel(666683529324789772).ModifyAsync(new(x => x.Name = $"» Członkowie: {e.Guild.MemberCount}"));
+                if(e.Guild.Id == 464854486226305036)
+                    await e.Guild.GetChannel(666683529324789772).ModifyAsync(new(x => x.Name = $"» Członkowie: {e.Guild.MemberCount}"));
             };
             
             discord.MessageCreated += async (s, e) =>
