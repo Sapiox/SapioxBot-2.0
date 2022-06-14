@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using LiteDB;
 using Newtonsoft.Json;
@@ -137,6 +138,57 @@ namespace SapioxBot.Commands
             };
 
             await ctx.CreateResponseAsync(embed);
+        }
+
+        [SlashCommand("hosting", "Sapiox hosting info")]
+        public async Task Hosting(InteractionContext ctx)
+        {
+            WebClient client = new WebClient();
+            string json = client.DownloadString("https://randomfox.ca/floof/?ref=apilist.fun");
+            string imageurl = JsonConvert.DeserializeObject<Dictionary<string, string>>(json)["image"];
+
+            var embed = new DiscordEmbedBuilder()
+            {
+                Title = "Our Hosting",
+                ImageUrl = imageurl,
+                Color = DiscordColor.Blurple
+            };
+
+            await ctx.CreateResponseAsync(embed);
+        }
+
+        [SlashCommand("rekrutacja", "Zgłoś się na moderatora!")]
+        public async Task test(InteractionContext ctx)
+        {
+            var button_discord = new DiscordButtonComponent(DSharpPlus.ButtonStyle.Primary, "cw_rekru_apply_dc", "Aplikuj na DC Moderator", emoji: new DiscordComponentEmoji(972801912510500914));
+            var button_sl = new DiscordButtonComponent(DSharpPlus.ButtonStyle.Primary, "cw_rekru_apply_sl", "Aplikuj na SL Moderator", emoji: new DiscordComponentEmoji(414540014417084426));
+
+            var embed = new DiscordEmbedBuilder()
+            {
+                Title = "***__REKRUTACJA NA MODERATORA__***",
+                Description = "Zgłoś się na Moderatora!\nSprawdzamy zgłoszenia codziennie, a jeśli ktoś nam się spodoba to do niego napiszemy.",
+                Color = DiscordColor.Green
+            };
+
+            var message = new DiscordInteractionResponseBuilder().AddEmbed(embed).AddComponents(button_discord, button_sl);
+
+            await ctx.CreateResponseAsync(message);
+        }
+
+        [SlashCommand("test", "test")]
+        public async Task testt(InteractionContext ctx)
+        {
+            var response = new DiscordInteractionResponseBuilder();
+
+            response
+              .WithTitle("Super cool modal!")
+              .WithCustomId("my-modal")
+  .AddComponents(new TextInputComponent(label: "Ile masz lat?", customId: "cw_rekru_q1", placeholder: "Wpisz swój wiek", max_length: 3))
+  .AddComponents(new TextInputComponent("Czy pełniłeś/aś kiedyś podobną funkcję?", "why-fav", "Because it tastes good"));
+             //.AddComponents(new TextInputComponent(label: "Czy pełniłeś/aś kiedyś podobną funkcję? Jeżeli tak to gdzie i jaką?", customId: "cw_rekru_q2", max_length: 300))
+              //.AddComponents(new TextInputComponent(label: "Opisz siebie!", customId: "cw_rekru_q3", max_length: 300));
+
+            await ctx.CreateResponseAsync(InteractionResponseType.Modal, response);
         }
     }
 }
