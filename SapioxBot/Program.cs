@@ -4,7 +4,9 @@ using DSharpPlus.Net.Models;
 using DSharpPlus.SlashCommands;
 using SapioxBot.Commands;
 using SapioxBot.Currency;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SapioxBot
 {
@@ -19,7 +21,7 @@ namespace SapioxBot
         {
             var discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = "Njg2Mjc3MDMwNDgzODUzNDA2.GXwx3s.ebepx8CV6Suk40Pg99AKX0vTtWyU2OeL_-FMeY",
+                Token = "Njg2Mjc3MDMwNDgzODUzNDA2.GE6YEc.twsEDI0_3MwzFP-hx6yLA0_SBVnUP-qHNRhi2s",
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             });
@@ -68,10 +70,13 @@ namespace SapioxBot
             };
 
             var slash = discord.UseSlashCommands();
-            slash.RegisterCommands<OtherCommands>();
-            slash.RegisterCommands<PSBIG>(464854486226305036);
+            slash.RegisterCommands<ApplicationCommandModule>();
+            slash.RegisterCommands<OtherCommands>(464854486226305036);
+            slash.RegisterCommands<OtherCommands>(867857272339693598);
+            slash.RegisterCommands<PSBIG>(867857272339693598);
             slash.RegisterCommands<CwanStars>(464854486226305036);
-            slash.RegisterCommands<CurrencyCommands>();
+            slash.RegisterCommands<CurrencyCommands>(867857272339693598);
+            slash.RegisterCommands<CurrencyCommands>(464854486226305036);
             await discord.ConnectAsync();
             await Task.Delay(-1);
         }

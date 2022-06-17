@@ -2,8 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
+        <TargetFramework>net5.0</TargetFramework>
         <Nullable>enable</Nullable>
         <PackageIcon>52024046f148939f1cd2ac08877f6209.png</PackageIcon>
     </PropertyGroup>

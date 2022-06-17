@@ -5,7 +5,9 @@ using LiteDB;
 using Newtonsoft.Json;
 using SapioxBot.Currency;
 using SapioxBot.Database;
+using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace SapioxBot.Commands
 {
