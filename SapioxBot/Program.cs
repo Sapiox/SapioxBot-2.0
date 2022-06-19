@@ -21,7 +21,7 @@ namespace SapioxBot
         {
             var discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = "Njg2Mjc3MDMwNDgzODUzNDA2.GE6YEc.twsEDI0_3MwzFP-hx6yLA0_SBVnUP-qHNRhi2s",
+                Token = "Njg2Mjc3MDMwNDgzODUzNDA2.Gkzgam.sWbxf0S9p3VrVFeiDK2gSLE5yI2Sv5PoSSBgLg",
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             });
