@@ -12,7 +12,7 @@ namespace SapioxBot.Commands
 {
     public class CurrencyCommands : ApplicationCommandModule
     {
-        [SlashCommand("bal", "shows your coin balance")]
+        [SlashCommand("bal", "Pokazuje ile masz na koncie")]
         public async Task Bal(InteractionContext ctx)
         {
             using (var Database = DatabaseManager.Database)
@@ -31,7 +31,7 @@ namespace SapioxBot.Commands
                 {
                     var embed = new DiscordEmbedBuilder()
                     {
-                        Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = $"{ctx.User.Username}'s Balance", IconUrl = ctx.User.AvatarUrl },
+                        Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = $"Portfel {ctx.User.Username}", IconUrl = ctx.User.AvatarUrl },
                         Description = $"**{Users.FindOne(x => x.Id == ctx.User.Id).Coins} $**",
                         Color = DiscordColor.Cyan
                     };
@@ -40,7 +40,7 @@ namespace SapioxBot.Commands
             }
         }
 
-        [SlashCommand("inventory", "shows your invetory")]
+        [SlashCommand("inventory", "Pokazuje twoje inventory")]
         public async Task Inventory(InteractionContext ctx)
         {
             using (var Database = DatabaseManager.Database)
@@ -98,7 +98,7 @@ namespace SapioxBot.Commands
             }
         }*/
 
-        [SlashCommand("shop", "items shop")]
+        [SlashCommand("shop", "item shop")]
         public async Task Shop(InteractionContext ctx)
         {
             string description = "";
@@ -116,7 +116,7 @@ namespace SapioxBot.Commands
             await ctx.CreateResponseAsync(embed);
         }
 
-        [SlashCommand("buy", "buy an item")]
+        [SlashCommand("buy", "kup item")]
         public async Task Buy(InteractionContext ctx, [Option("item_name", "Item name")] string item_name)
         {
             using (var Database = DatabaseManager.Database)
@@ -136,7 +136,7 @@ namespace SapioxBot.Commands
 
                 var item = Items.Itemlist.Find(x => x.Name.ToLower() == item_name.ToLower());
 
-                if (item == null) await ctx.CreateResponseAsync("Invalid item name!");
+                if (item == null) await ctx.CreateResponseAsync("Niepoprawna nazwa itemu!");
                 else
                 {
                     if (User.Coins >= item.cost)
@@ -146,7 +146,7 @@ namespace SapioxBot.Commands
 
                         var embed = new DiscordEmbedBuilder()
                         {
-                            Description = "Sucess, you now have a new item!",
+                            Description = "Pomyślnie zakupiono nowy item!",
                             Color = DiscordColor.Green
                         };
                         await ctx.CreateResponseAsync(embed);
@@ -155,7 +155,7 @@ namespace SapioxBot.Commands
                     {
                         var embed = new DiscordEmbedBuilder()
                         {
-                            Description = "Bruh you too poor, go to work!",
+                            Description = "Jesteś zbyt biedny na to!",
                             Color = DiscordColor.Red
                         };
                         await ctx.CreateResponseAsync(embed);
@@ -171,7 +171,7 @@ namespace SapioxBot.Commands
             await ctx.CreateResponseAsync("ok");
         }*/
 
-        [SlashCommand("daily", "gives you daily coins!")]
+        [SlashCommand("daily", "Odbierz swoje codzienne coiny")]
         public async Task Daily(InteractionContext ctx)
         {
             using (var Database = DatabaseManager.Database)
@@ -195,8 +195,8 @@ namespace SapioxBot.Commands
 
                 var embed = new DiscordEmbedBuilder()
                 {
-                    Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = $"{ctx.User.Username}'s Daily Coins", IconUrl = ctx.User.AvatarUrl },
-                    Description = "**10000 $** was placed in your wallet!",
+                    Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = $"{ctx.User.Username}", IconUrl = ctx.User.AvatarUrl },
+                    Description = "**10000 $** zostało dodane do twojego portfela!",
                     Color = DiscordColor.Aquamarine
                 };
 
@@ -204,7 +204,7 @@ namespace SapioxBot.Commands
             }
         }
 
-        [SlashCommand("monthly", "gives you monthly coins!")]
+        [SlashCommand("monthly", "Odbierz swoje miesięczne coiny")]
         async Task Monthly(InteractionContext ctx)
         {
             using (var Database = DatabaseManager.Database)
@@ -228,8 +228,8 @@ namespace SapioxBot.Commands
 
                 var embed = new DiscordEmbedBuilder()
                 {
-                    Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = $"{ctx.User.Username}'s Monthly Coins", IconUrl = ctx.User.AvatarUrl },
-                    Description = "**100000 $** was placed in your wallet!",
+                    Author = new DiscordEmbedBuilder.EmbedAuthor() { Name = $"{ctx.User.Username}", IconUrl = ctx.User.AvatarUrl },
+                    Description = "**100000 $** zostało dodane do twojego portfela!",
                     Color = DiscordColor.Aquamarine
                 };
 

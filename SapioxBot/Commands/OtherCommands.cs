@@ -13,7 +13,7 @@ namespace SapioxBot.Commands
 {
     public class OtherCommands : ApplicationCommandModule
     {
-        [SlashCommand("settings", "test")]
+        /*[SlashCommand("settings", "test")]
         public async Task Settings(InteractionContext ctx)
         {
             var embed = new DiscordEmbedBuilder()
@@ -37,7 +37,7 @@ namespace SapioxBot.Commands
             //there should be some code for database but im dumb and idk how to use that yet
 
             await ctx.CreateResponseAsync(message);
-        }
+        }*/
 
         [SlashCommand("catboy", "random catboy picture")]
         public async Task Catboy(InteractionContext ctx)

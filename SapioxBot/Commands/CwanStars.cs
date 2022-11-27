@@ -16,20 +16,20 @@ namespace SapioxBot.Commands
 
     public class CwanStars : ApplicationCommandModule
     {
-        [SlashCommand("sl", "sl status")]
+        [SlashCommand("sl", "Status naszego serwera scpsl")]
         public async Task Sl(InteractionContext ctx)
         {
             try
             {
                 WebClient client = new WebClient();
-                string json1 = client.DownloadString("https://api.scpslgame.com/serverinfo.php?id=20819&key=ExNm2hgECsbuf83%2F0wMyIgtD&players=true&list=true&info=true&version=true&nicknames=true");
+                string json1 = client.DownloadString("https://api.scpslgame.com/serverinfo.php?id=21882&key=LC3tp9mf07ClT2EFjMqDa3uV&players=true&list=true&info=true&version=true&nicknames=true");
                 var json = JObject.Parse(json1);
                 var PlayersList1 = json["Servers"][0]["PlayersList"];
                 string PlayersList = string.Join("\n", PlayersList1);
 
                 var embed = new DiscordEmbedBuilder()
                 {
-                    Title = $"SCP SL | CwanStars #1",
+                    Title = $"SCP SL | niewiem #1",
                     Description = $"🎮 Gracze: {json["Servers"][0]["Players"]}\n```{PlayersList}```\n❗Wersja gry: {json["Servers"][0]["Version"]}",
                     Color = DiscordColor.Green
                 };

@@ -21,7 +21,7 @@ namespace SapioxBot
         {
             var discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = "Njg2Mjc3MDMwNDgzODUzNDA2.Gkzgam.sWbxf0S9p3VrVFeiDK2gSLE5yI2Sv5PoSSBgLg",
+                Token = "Njg2Mjc3MDMwNDgzODUzNDA2.G7CbVS.1Jc6NRxNdTZIcxJt_MkOaKt-8CUh-3bhA-iefs",
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             });
@@ -71,12 +71,19 @@ namespace SapioxBot
 
             var slash = discord.UseSlashCommands();
             slash.RegisterCommands<ApplicationCommandModule>();
-            slash.RegisterCommands<OtherCommands>(464854486226305036);
-            slash.RegisterCommands<OtherCommands>(867857272339693598);
+            //PSBIG
             slash.RegisterCommands<PSBIG>(867857272339693598);
-            slash.RegisterCommands<CwanStars>(464854486226305036);
             slash.RegisterCommands<CurrencyCommands>(867857272339693598);
+            slash.RegisterCommands<OtherCommands>(867857272339693598);
+            //CwanStars
+            slash.RegisterCommands<CwanStars>(464854486226305036);
             slash.RegisterCommands<CurrencyCommands>(464854486226305036);
+            slash.RegisterCommands<OtherCommands>(464854486226305036);
+            //niewiem
+            slash.RegisterCommands<CwanStars>(1031166390608089151);
+            slash.RegisterCommands<CurrencyCommands>(1031166390608089151);
+            slash.RegisterCommands<OtherCommands>(1031166390608089151);
+
             await discord.ConnectAsync();
             await Task.Delay(-1);
         }
